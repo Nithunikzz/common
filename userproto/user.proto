@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package UserService;
+
+option go_package = "gitlab.com/tariandev_intelops/iam/userproto";
+
+message UserPayload {
+    string userid = 1;
+   string firstname = 2;
+   string lastname = 3;
+    string email = 4;
+    string ory_id = 5;
+}
+
+message GetUserInfo {
+    string userid = 1;
+   string firstname = 2;
+   string lastname = 3;
+    string email = 4;
+    string ory_id = 5;
+}
+
+message UserResponse {
+    string userid = 1;
+}
+
+message GetUserByOryIDRequest {
+    string ory_id = 1;
+}
+message GetUserByEmailRequest{
+    string email =1;
+}
+
+message AddUserPayload {
+    string orgid = 1;
+    repeated string roleid = 2;
+    string email = 3;
+    string firstname = 4;
+    string lastname = 5;
+}
+
+message AddUserResponse {
+    bool success =1;
+}
+
+message ListUserPayload {
+    string orgid =1;
+}
+
+message Role {
+    string roleid = 1;
+    string rolename = 2;
+    string roledisplayname = 3;
+}
+
+message Response {
+    string email = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string userid = 4;
+    repeated Role roles = 5;
+}
+
+message ListUserResponse {
+    repeated Response response=1;
+}
+
+message DeleteUserPayload {
+    string orgid =1;
+    string userid =2;
+}
+message DeleteUserResponse{
+    bool success =1;
+}
+message GetUserPayload {
+    string userid = 1;
+}
+
+message GetUserDetailsPayload {
+
+}
+
+message UserDetailsResponse {
+    string OrganisationID = 1;
+    string OrganisationName = 2;
+    string userid = 3;
+    string firstname = 4;
+    string lastname = 5;
+    string email = 6;
+    string roleid = 7;
+    string rolename = 8;
+    repeated GetActionResponse action = 9;
+
+}
+
+message GetActionResponse {
+    string actionid = 1;
+    string actionname = 2;
+
+}
+
+message GetUserDetailsResponse {
+    repeated UserDetailsResponse response=1;
+}
+message UpdateUserPayload {
+    string userid = 1;
+    string firstname = 2;
+    string lastname = 3;
+}
+
+message UpdateUserResponse{
+    bool success =1;
+}
+
+message UpdateUserRolesForOrgRequest {
+    string orgid = 1;
+    repeated string roleids = 2;
+    string userid = 3;
+    string firstname = 4;
+    string lastname = 5;
+  }
+
+  message UpdateUserRolesForOrgResponse {
+    bool success = 1;
+    string message = 2;
+  }
+
+service User {
+    rpc GetUser(GetUserPayload) returns (GetUserInfo);
+    rpc CreateUser(UserPayload) returns (UserResponse);
+    rpc UpdateUser(UpdateUserPayload) returns (UpdateUserResponse);
+    rpc GetUserByOryID(GetUserByOryIDRequest) returns (GetUserInfo);
+    rpc GetUserByEmail(GetUserByEmailRequest)returns(GetUserInfo);
+    rpc AddUser(AddUserPayload) returns(AddUserResponse);
+    rpc ListUser(ListUserPayload)returns(ListUserResponse);
+    rpc DeleteUser(DeleteUserPayload)returns(DeleteUserResponse);
+    rpc GetUserDetails(GetUserDetailsPayload)returns (GetUserDetailsResponse);
+    rpc UpdateUserRolesForOrg(UpdateUserRolesForOrgRequest) returns(UpdateUserRolesForOrgResponse);
+}
