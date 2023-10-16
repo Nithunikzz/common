@@ -95,7 +95,7 @@ type CommonInterceptorConfig struct {
 	logger         logging.Logger
 }
 
-func NewCommonInterceptorConfig(iamClient *IAMClient, oryClient *OryClient, cerbosClient *cerbosClient, policyLocation string) (*CommonInterceptorConfig, error) {
+func NewCommonInterceptorConfig(iamClient *IAMClient, oryClient *OryClient, cerbosClient *cerbosClient, policyLocation string, log logging.Logger) (*CommonInterceptorConfig, error) {
 	// Create a logger with the desired configuration
 	// Create a logger using the cmni package
 	logger := logging.NewLogger()
